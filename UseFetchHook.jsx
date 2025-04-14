@@ -9,11 +9,24 @@ function UseFetchHook() {
   const contentRef = useRef();
   const mainContentRef = useRef();
   const buttonRef = useRef();
+  const bottomRef = useRef(null);
 
   function handleContentDisplay() {
     contentRef.current.style.display = "block";
     mainContentRef.current.style.display = "block";
     buttonRef.current.style.display = "none";
+  }
+
+  function scrollToBottom() {
+    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
 
   async function fetchProducts() {
@@ -70,6 +83,10 @@ function UseFetchHook() {
   return (
     <div className="main-container">
       <h1>Use Fetch Hook</h1>
+      <h5 className="mt-3">This is the top section</h5>
+      <button className="mt-3" onClick={scrollToBottom}>
+        Scroll To Bottom
+      </button>
       {products && products.length > 0
         ? products.map((product, id) => (
             <div className="mt-3" key={id}>
@@ -90,6 +107,9 @@ function UseFetchHook() {
         </p>
       </div>
       <WindowResize />
+      <button onClick={scrollToTop}>Scroll To Top</button>
+      <div ref={bottomRef}></div>
+      <h5 className="mt-3">This is the bottom of the page</h5>
     </div>
   );
 }
